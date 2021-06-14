@@ -3,6 +3,7 @@ package com.web.server.webserver.controller;
 
 import com.web.server.webserver.domain.Game;
 import com.web.server.webserver.service.GameService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,5 +45,11 @@ public class GameController {
     public ResponseEntity<String> exceptionHandler(ConstraintViolationException ex) {
 
         return new ResponseEntity<>("Message " + ex.getMessage(), HttpStatus.ALREADY_REPORTED);
+    }
+
+
+    @GetMapping("/count")
+    public Integer getPostViewCount(@RequestParam String url) {
+        return gameService.getPostViewCount(url);
     }
 }
