@@ -1,5 +1,6 @@
 package com.web.server.webserver.service.impl;
 
+import com.web.server.webserver.analytics.GoogleAnalytics;
 import com.web.server.webserver.domain.Game;
 import com.web.server.webserver.repository.GameRepository;
 import com.web.server.webserver.service.GameService;
@@ -9,13 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+
 public class GameServiceImpl implements GameService {
 
     private GameRepository gameRepository;
+    private final GoogleAnalytics googleAnalytics;
 
     @Autowired
-    public GameServiceImpl(GameRepository gameRepository) {
+    public GameServiceImpl(GameRepository gameRepository, GoogleAnalytics googleAnalytics) {
         this.gameRepository = gameRepository;
+        this.googleAnalytics = googleAnalytics;
     }
 
     @Override
@@ -36,5 +40,9 @@ public class GameServiceImpl implements GameService {
     @Override
     public Game findById(int id) {
         return gameRepository.findById(id);
+    }
+    @Override
+    public  Integer getPostViewCount(String url) {
+        return googleAnalytics.getPostViewCount(url);
     }
 }
