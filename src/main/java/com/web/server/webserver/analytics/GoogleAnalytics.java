@@ -14,6 +14,8 @@ import com.google.api.services.analytics.model.Webproperties;
  import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import java.io.ByteArrayInputStream;
 
 import java.io.FileInputStream;
 import java.io.IOException;
