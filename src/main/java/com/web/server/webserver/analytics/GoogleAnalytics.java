@@ -28,7 +28,8 @@ public class GoogleAnalytics {
 
 	private static final String APPLICATION_NAME = "Google Analytics";
 	private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
-	private static final String KEY_FILE_LOCATION = "src/main/resources/client_secrets.json";
+	@Value("${analytics.creds}")
+	private String googleCredsFromJSON;
 	private static final Logger logger = LoggerFactory.getLogger(RestAuthenticationEntryPoint.class);
 
 	public Integer getPostViewCount(String url) {
@@ -64,8 +65,9 @@ public class GoogleAnalytics {
 		}
 
 		GoogleCredential credential = GoogleCredential
-				.fromStream(new FileInputStream(KEY_FILE_LOCATION))
-				.createScoped(AnalyticsScopes.all());
+				.fromStream(new ByteArrayInputStream(googleCredsFromJSON
+						.getBytes()), httpTransport, JSON_FACTORY)
+				.createScoped(AnalyticsScopes.all());;
 
 		/**
 		 *  Construct the Analytics service object.
